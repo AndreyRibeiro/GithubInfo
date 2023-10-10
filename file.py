@@ -111,7 +111,4 @@ class TestMethods(unittest.TestCase):
             self.assertTrue(hasattr(user, param))
 
 usuario = input("Digite o nome do usuário: ")
-# dados_usuario = get_user_data(usuario)
-# get_user_data(usuario)
 save_user_data_in_file(usuario)
-# get_user_repos(usuario)
