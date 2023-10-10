@@ -1,0 +1,48 @@
+Dados do usuário: andreyribeiro
+
+Nome de Usuário: AndreyRibeiro
+URL do Usuário: https://github.com/AndreyRibeiro
+Número de repositórios públicos: 13
+Número de seguidores do usuário: 3
+Número de pessoas seguindo: 4
+
+Repositórios do usuário:
+Nome do repositório: AndreyRibeirO
+URL do repositório: https://github.com/AndreyRibeiro/AndreyRibeirO
+
+Nome do repositório: Bicicletaria
+URL do repositório: https://github.com/AndreyRibeiro/Bicicletaria
+
+Nome do repositório: CurrencyConversion
+URL do repositório: https://github.com/AndreyRibeiro/CurrencyConversion
+
+Nome do repositório: DjangoBlog
+URL do repositório: https://github.com/AndreyRibeiro/DjangoBlog
+
+Nome do repositório: GithubInfo
+URL do repositório: https://github.com/AndreyRibeiro/GithubInfo
+
+Nome do repositório: Lanchonete
+URL do repositório: https://github.com/AndreyRibeiro/Lanchonete
+
+Nome do repositório: Pokedex
+URL do repositório: https://github.com/AndreyRibeiro/Pokedex
+
+Nome do repositório: Pong
+URL do repositório: https://github.com/AndreyRibeiro/Pong
+
+Nome do repositório: Portfolio
+URL do repositório: https://github.com/AndreyRibeiro/Portfolio
+
+Nome do repositório: Pr-tica-HTML-e-CSS
+URL do repositório: https://github.com/AndreyRibeiro/Pr-tica-HTML-e-CSS
+
+Nome do repositório: PyGame
+URL do repositório: https://github.com/AndreyRibeiro/PyGame
+
+Nome do repositório: RestApiFlask
+URL do repositório: https://github.com/AndreyRibeiro/RestApiFlask
+
+Nome do repositório: Run-Little-Mouse
+URL do repositório: https://github.com/AndreyRibeiro/Run-Little-Mouse
+
