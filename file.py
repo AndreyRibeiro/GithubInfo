@@ -13,9 +13,8 @@ class User:
         retornar o código do erro.
         """
         if not self.check_user_exists(usuario):
-            print(f'O usuário "{usuario}" não foi encontrado no Github.')
+            print(f'O usuário "{usuario}" não foi encontrado no Github!')
             return
-        
         save_user_data_in_file(usuario)
         
     def check_user_exists(self, usuario):
@@ -42,12 +41,14 @@ def get_user_data(usuario):
         response = requests.get(url)
         response.raise_for_status()
         usuario_info = response.json()
+        nome_usuario = usuario_info['name']
         url_usuario = usuario_info['html_url']
         repos_usuario = usuario_info['public_repos']
         seguidores_usuario = usuario_info['followers']
         seguindo_usuario = usuario_info['following']
 
         return {
+            'Nome': nome_usuario,
             'Perfil': url_usuario,
             'Número de repositórios públicos': repos_usuario,
             'Número de seguidores': seguidores_usuario,
@@ -100,8 +101,6 @@ def save_user_data_in_file(usuario):
     arquivo_txt = f'{usuario}.txt'
     try:
         with open(arquivo_txt, 'w') as arquivo:
-            arquivo.write(f'Nome: {usuario}\n')
-            
             if dados_usuario:
                 for chave, valor in dados_usuario.items():
                     arquivo.write(f'{chave}: {valor}\n')
@@ -124,6 +123,6 @@ class TestMethods(unittest.TestCase):
         user = get_user_data(usuario)
         for param in parameters:
             self.assertTrue(hasattr(user, param))
-
 if __name__ == "__main__":
     User()
+    unittest.main()
