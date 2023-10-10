@@ -2,17 +2,9 @@ import unittest
 import requests
 
 class User:
+    def __init__(self, usuario):
+        self.usuario = usuario
 
-    usuario = input("Digite o nome de usuário: ")
-
-    def __init__(self):
-        """ 
-        Esta função serve para iniciar a aplicação, coletar os
-        dados do usuário e armazená-los dentro do arquivo txt, fazendo isso
-        através da captação do nome do usuário e chamada das funções do código.
-        Caso o usuário não seja encontrado no Github, o programa irá parar e 
-        retornar o código do erro.
-        """
         if not self.check_user_exists():
             print(f'O usuário "{self.usuario}" não foi encontrado no Github!')
             return
@@ -31,12 +23,6 @@ class User:
             return False
 
     def get_user_data(self):
-        """
-        Esta função serve para obter os dados do usuário, 
-        os quais incluirão informações gerais URL do perfil, número de 
-        repositórios públicos, número de seguidores e número de pessoas
-        que o mesmo segue, realizando as solicitações pela API do Github.
-        """
         url = f'https://api.github.com/users/{self.usuario}'
         try:
             response = requests.get(url)
@@ -60,15 +46,10 @@ class User:
             print(f'Ops! Ocorreu um erro na solicitação à API! Erro: {e}')
             return None
         except KeyError as e:
-            print(f"Ops! Erro ao analisar a reposta JSON: {e}")
+            print(f"Ops! Erro ao analisar a resposta JSON: {e}")
             return None
 
     def get_user_repos(self):
-        """
-        Esta função serve para coletar o nome dos repositórios
-        públicos do usuário, o link do repositório e armazená-los
-        em um dicionário.
-        """
         url = f'https://api.github.com/users/{self.usuario}/repos'
         try:
             response = requests.get(url)
@@ -87,15 +68,10 @@ class User:
             print(f'Ops! Ocorreu um erro na solicitação à API! Erro: {e}')
             return {}
         except KeyError as e:
-            print(f"Ops! Erro ao analisar a reposta JSON: {e}")
+            print(f"Ops! Erro ao analisar a resposta JSON: {e}")
             return {}
 
     def save_user_data_in_file(self):
-        """
-        Este trecho do código servirá para coletar todos os dados do usuário,
-        além de armazenar o nome dos repositórios e o link dos mesmos em conjunto
-        e imprimir dentro de um arquivo .txt com o nome do usuário como título.
-        """
         dados_usuario = self.get_user_data()
         repos_usuario = self.get_user_repos()
 
@@ -105,26 +81,27 @@ class User:
                 if dados_usuario:
                     for chave, valor in dados_usuario.items():
                         arquivo.write(f'{chave}: {valor}\n')
-                        
+
                 arquivo.write('Repositórios:\n')
-                
+
                 for nome, url in repos_usuario.items():
                     arquivo.write(f'{nome}: {url}\n')
-                    
+
                 print(f'As informações foram salvas em "{arquivo_txt}".')
-        
         except Exception as e:
-            print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')       
+            print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')    
 
 class TestMethods(unittest.TestCase):
     def test_user_has_minimal_parameters(self):
+        usuario = 'github'
+        user = User(usuario)
+        user_data = user.get_user_data()
         parameters = [
-            'name', 'html_url', 'public_repos', 'followers', 'following'
+            'Nome', 'Perfil', 'Número de repositórios públicos', 'Número de seguidores', 'Número de usuários seguidos'
         ]
-        user = User.get_user_data("github")
         for param in parameters:
-            self.assertTrue(hasattr(user, param))
-
+            self.assertTrue(param in user_data)
 if __name__ == "__main__":
-    User()
+    usuario = input("Digite o nome do usuário: ")
+    user = User(usuario)
     unittest.main()
