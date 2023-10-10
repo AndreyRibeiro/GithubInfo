@@ -34,11 +34,10 @@ def get_user_data(usuario):
         seguindo_usuario = usuario_info['following']
 
         return {
-            'Nome de Usuário': nome,
-            'URL do Usuário': url_usuario,
+            'Perfil': url_usuario,
             'Número de repositórios públicos': repos_usuario,
-            'Número de seguidores do usuário': seguidores_usuario,
-            'Número de pessoas seguindo': seguindo_usuario
+            'Número de seguidores': seguidores_usuario,
+            'Número de usuários seguidos': seguindo_usuario
         }
     
     except requests.exceptions.RequestException as e:
@@ -85,17 +84,16 @@ def save_user_data_in_file(usuario):
     arquivo_txt = f'{usuario}.txt'
     try:
         with open(arquivo_txt, 'w') as arquivo:
-            arquivo.write(f'Dados do usuário: {usuario}\n\n')
+            arquivo.write(f'Nome: {usuario}\n')
             
             if dados_usuario:
                 for chave, valor in dados_usuario.items():
                     arquivo.write(f'{chave}: {valor}\n')
                     
-            arquivo.write('\nRepositórios do usuário:\n')
+            arquivo.write('Repositórios:\n')
             
             for nome, url in repos_usuario.items():
-                arquivo.write(f'Nome do repositório: {nome}\n')
-                arquivo.write(f'URL do repositório: {url}\n\n')
+                arquivo.write(f'{nome}: {url}\n')
                 
             print(f'As informações foram salvas em "{arquivo_txt}".')
     
