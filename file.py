@@ -1,33 +1,29 @@
 import unittest
 import requests
 
+usuario = input("Digite o nome do usuário: ")
+
 class User:
-    def __init__(self, nome, url_usuario, repos_usuario, seguidores_usuario, seguindo_usuario):
+    def __init__(self):
         """ 
         Esta função servirá para iniciar a aplicação, coletar os
-        dados do usuário e armazená-los em variáveis referentes
-        ao usuário.
+        dados do usuário e armazená-los dentro do arquivo txt, fazendo isso
+        através da captação do nome do usuário e chamada das funções do código.
         """
-        self.name = nome
-        self.user_url = url_usuario
-        self.user_repos = repos_usuario
-        self.user_followers = seguidores_usuario
-        self.user_following = seguindo_usuario
+        save_user_data_in_file(usuario)
 
 def get_user_data(usuario):
     """
     Esta função serve para obter os dados do usuário, 
-    os quais incluirão informações gerais como nome de usuário,
-    URL do perfil, número de repositórios públicos, número de seguidores
-    e número de pessoas que o mesmo segue, realizando as solicitações
-    pela API do Github.
+    os quais incluirão informações gerais URL do perfil, número de 
+    repositórios públicos, número de seguidores e número de pessoas
+    que o mesmo segue, realizando as solicitações pela API do Github.
     """
     url = f'https://api.github.com/users/{usuario}'
     try:
         response = requests.get(url)
         response.raise_for_status()
         usuario_info = response.json()
-        nome = usuario_info['login']
         url_usuario = usuario_info['html_url']
         repos_usuario = usuario_info['public_repos']
         seguidores_usuario = usuario_info['followers']
@@ -50,7 +46,8 @@ def get_user_data(usuario):
 def get_user_repos(usuario):
     """
     Esta função serve para coletar o nome dos repositórios
-    públicos do usuário, o link do repositório e 
+    públicos do usuário, o link do repositório e armazená-los
+    em um dicionário.
     """
     url = f'https://api.github.com/users/{usuario}/repos'
     try:
@@ -77,6 +74,7 @@ def save_user_data_in_file(usuario):
     """
     Este trecho do código servirá para coletar todos os dados do usuário,
     além de armazenar o nome dos repositórios e o link dos mesmos em conjunto
+    e imprimir dentro de um arquivo .txt com o nome do usuário como título.
     """
     dados_usuario = get_user_data(usuario)
     repos_usuario = get_user_repos(usuario)
@@ -110,5 +108,5 @@ class TestMethods(unittest.TestCase):
         for param in parameters:
             self.assertTrue(hasattr(user, param))
 
-usuario = input("Digite o nome do usuário: ")
-save_user_data_in_file(usuario)
+if __name__ == "__main__":
+    User()
