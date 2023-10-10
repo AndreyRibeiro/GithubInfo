@@ -9,8 +9,26 @@ class User:
         Esta função servirá para iniciar a aplicação, coletar os
         dados do usuário e armazená-los dentro do arquivo txt, fazendo isso
         através da captação do nome do usuário e chamada das funções do código.
+        Caso o usuário não seja encontrado no Github, o programa irá parar e 
+        retornar o código do erro.
         """
+        if not self.check_user_exists(usuario):
+            print(f'O usuário "{usuario}" não foi encontrado no Github.')
+            return
+        
         save_user_data_in_file(usuario)
+        
+    def check_user_exists(self, usuario):
+        url = f'https://api.github.com/users/{usuario}'
+        try:
+            response = requests.get(url)
+            if response.status_code == 404:
+                return False
+            response.raise_for_status()
+            return True
+        except requests.exceptions.RequestException as e:
+            print(f'Ops! Ocorreu um erro na solicitação à API! Erro: {e}')
+            return False
 
 def get_user_data(usuario):
     """
@@ -96,8 +114,7 @@ def save_user_data_in_file(usuario):
             print(f'As informações foram salvas em "{arquivo_txt}".')
     
     except Exception as e:
-        print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}') 
-        
+        print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')       
 
 class TestMethods(unittest.TestCase):
     def test_user_has_minimal_parameters(self):
