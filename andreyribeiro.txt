@@ -1,6 +1,6 @@
 Nome: Andrey Ribeiro
 Perfil: https://github.com/AndreyRibeiro
-Número de repositórios públicos: 13
+Número de repositórios públicos: 11
 Número de seguidores: 3
 Número de usuários seguidos: 4
 Repositórios:
@@ -12,8 +12,6 @@ GithubInfo: https://github.com/AndreyRibeiro/GithubInfo
 Lanchonete: https://github.com/AndreyRibeiro/Lanchonete
 Pokedex: https://github.com/AndreyRibeiro/Pokedex
 Pong: https://github.com/AndreyRibeiro/Pong
-Portfolio: https://github.com/AndreyRibeiro/Portfolio
-Pr-tica-HTML-e-CSS: https://github.com/AndreyRibeiro/Pr-tica-HTML-e-CSS
 PyGame: https://github.com/AndreyRibeiro/PyGame
 RestApiFlask: https://github.com/AndreyRibeiro/RestApiFlask
 Run-Little-Mouse: https://github.com/AndreyRibeiro/Run-Little-Mouse
