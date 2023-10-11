@@ -177,10 +177,9 @@ class TestMethods(unittest.TestCase):
         ]
 
         for usuario, expected_result in parameters:
-            with self.subTest(usuario=usuario):
-                user = User(usuario)
-                result = user.check_user_exists()
-                self.assertEqual(result, expected_result, f'Erro para usuário: {usuario}')
+            user = User(usuario)
+            result = user.check_user_exists()
+            self.assertEqual(result, expected_result, f'Erro para usuário: {usuario}')
 
 if __name__ == "__main__":
     """
