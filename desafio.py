@@ -1,25 +1,25 @@
 import unittest
 import requests
 import os
-from typing import Dict, Optional, Union
+from typing import Dict, Union, Optional
 
 class User:
-    def __init__(self, usuario: str):
+    def __init__(self, username: str):
         """
         Esta função serve para iniciar a aplicação, coletar os
         dados do usuário e armazená-los dentro do arquivo txt, fazendo isso
         através da chamada das funções do código. Caso o usuário não seja 
         encontrado no Github, o programa irá parar e retornar o código do erro.
         """
-        self.usuario = usuario
+        self.username = username
 
         if not self.check_user_exists():
-            print(f'O usuário "{self.usuario}" não foi encontrado no Github!')
+            print(f'O usuário "{self.username}" não foi encontrado no Github!')
             return
         self.save_user_data_in_file()
 
     def check_user_exists(self) -> bool:
-        url = f'https://api.github.com/users/{self.usuario}'
+        url = f'https://api.github.com/users/{self.username}'
         try:
             response = requests.get(url)
             if response.status_code == 404:
@@ -37,23 +37,23 @@ class User:
         repositórios públicos, número de seguidores e número de pessoas
         que o mesmo segue, realizando as solicitações pela API do Github.
         """
-        url = f'https://api.github.com/users/{self.usuario}'
+        url = f'https://api.github.com/users/{self.username}'
         try:
             response = requests.get(url)
             response.raise_for_status()
-            usuario_info = response.json()
-            nome_usuario = usuario_info['name']
-            url_usuario = usuario_info['html_url']
-            repos_usuario = usuario_info['public_repos']
-            seguidores_usuario = usuario_info['followers']
-            seguindo_usuario = usuario_info['following']
+            user_info = response.json()
+            name_user = user_info['name']
+            url_user = user_info['html_url']
+            repos_user = user_info['public_repos']
+            followers_user = user_info['followers']
+            following_user = user_info['following']
 
             return {
-                'Nome': nome_usuario,
-                'Perfil': url_usuario,
-                'Número de repositórios públicos': repos_usuario,
-                'Número de seguidores': seguidores_usuario,
-                'Número de usuários seguidos': seguindo_usuario
+                'Nome': name_user,
+                'Perfil': url_user,
+                'Número de repositórios públicos': repos_user,
+                'Número de seguidores': followers_user,
+                'Número de usuários seguidos': following_user
             }
 
         except requests.exceptions.RequestException as e:
@@ -69,17 +69,17 @@ class User:
         públicos do usuário, o link do repositório e armazená-los
         em um dicionário.
         """
-        url = f'https://api.github.com/users/{self.usuario}/repos'
+        url = f'https://api.github.com/users/{self.username}/repos'
         try:
             response = requests.get(url)
             response.raise_for_status()
-            repositorios = response.json()
+            repos = response.json()
             repos_dict = {}
 
-            for repo in repositorios:
-                nome_repo = repo['name']
+            for repo in repos:
+                name_repo = repo['name']
                 url_repo = repo['html_url']
-                repos_dict[nome_repo] = url_repo
+                repos_dict[name_repo] = url_repo
 
             return repos_dict
 
@@ -96,22 +96,22 @@ class User:
         além de armazenar o nome dos repositórios e o link dos mesmos em conjunto
         e imprimir dentro de um arquivo .txt com o nome do usuário como título.
         """
-        dados_usuario = self.get_user_data()
-        repos_usuario = self.get_user_repos()
+        data_user = self.get_user_data()
+        repos_user = self.get_user_repos()
 
-        arquivo_txt = f'{self.usuario}.txt'
+        file_txt = f'{self.username}.txt'
         try:
-            with open(arquivo_txt, 'w') as arquivo:
-                if dados_usuario:
-                    for chave, valor in dados_usuario.items():
-                        arquivo.write(f'{chave}: {valor}\n')
+            with open(file_txt, 'w') as file:
+                if data_user:
+                    for key, value in data_user.items():
+                        file.write(f'{key}: {value}\n')
 
-                arquivo.write('Repositórios:\n')
+                file.write('Repositórios:\n')
 
-                for nome, url in repos_usuario.items():
-                    arquivo.write(f'{nome}: {url}\n')
+                for name, url in repos_user.items():
+                    file.write(f'{name}: {url}\n')
 
-                print(f'As informações foram salvas em "{arquivo_txt}".')
+                print(f'As informações foram salvas em "{file_txt}".')
         except Exception as e:
             print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')
 
@@ -124,8 +124,8 @@ class TestMethods(unittest.TestCase):
         análise dos parâmetros e comparando com os que estão 
         descritos no código e no arquivo gerado.
         """
-        usuario = 'github'
-        user = User(usuario)
+        username = 'github'
+        user = User(username)
         user_data = user.get_user_data()
         parameters = [
             'Nome', 'Perfil', 'Número de repositórios públicos', 'Número de seguidores', 'Número de usuários seguidos'
@@ -139,8 +139,8 @@ class TestMethods(unittest.TestCase):
         possui repositórios públicos em seu perfil. Caso 
         contrário, o teste irá falhar.
         """
-        usuario = 'github'
-        user = User(usuario)
+        username = 'github'
+        user = User(username)
         user_repos = user.get_user_repos()
         self.assertTrue(bool(user_repos))
         self.assertIsInstance(user_repos, dict)
@@ -153,16 +153,16 @@ class TestMethods(unittest.TestCase):
         informações corretas da coleta de dados das funções
         anteriores.
         """
-        usuario = 'github'
-        user = User(usuario)
+        username = 'github'
+        user = User(username)
         user.save_user_data_in_file()
 
-        arquivo_txt = f'{usuario}.txt'
+        file_txt = f'{username}.txt'
 
-        self.assertTrue(os.path.exists(arquivo_txt))
-        with open(arquivo_txt, 'r') as arquivo:
-            conteudo = arquivo.read()
-        self.assertTrue(conteudo)
+        self.assertTrue(os.path.exists(file_txt))
+        with open(file_txt, 'r') as file:
+            content = file.read()
+        self.assertTrue(content)
     
     def test_check_user_exists(self):
         """
@@ -176,10 +176,10 @@ class TestMethods(unittest.TestCase):
             ('thisuserdoesnotexists', False)
         ]
 
-        for usuario, expected_result in parameters:
-            user = User(usuario)
+        for username, expected_result in parameters:
+            user = User(username)
             result = user.check_user_exists()
-            self.assertEqual(result, expected_result, f'Erro para usuário: {usuario}')
+            self.assertEqual(result, expected_result, f'Erro para usuário: {username}')
 
 if __name__ == "__main__":
     """
@@ -188,6 +188,6 @@ if __name__ == "__main__":
     além de realizar todos os testes de unidade sobre cada função
     da classe User.
     """
-    usuario = input("Digite o nome do usuário: ")
-    user = User(usuario)
+    username = input("Digite o nome do usuário: ")
+    user = User(username)
     unittest.main()
