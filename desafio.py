@@ -1,11 +1,11 @@
 import unittest
 import requests
 import os
+from typing import Dict, Optional, Union
 
 class User:
-    def __init__(self, usuario):
+    def __init__(self, usuario: str):
         """
-        Esta função servirá para iniciar a aplicação, coletar os
         Esta função serve para iniciar a aplicação, coletar os
         dados do usuário e armazená-los dentro do arquivo txt, fazendo isso
         através da chamada das funções do código. Caso o usuário não seja 
@@ -18,7 +18,7 @@ class User:
             return
         self.save_user_data_in_file()
 
-    def check_user_exists(self):
+    def check_user_exists(self) -> bool:
         url = f'https://api.github.com/users/{self.usuario}'
         try:
             response = requests.get(url)
@@ -30,7 +30,7 @@ class User:
             print(f'Ops! Ocorreu um erro na solicitação à API! Erro: {e}')
             return False
 
-    def get_user_data(self):
+    def get_user_data(self) -> Optional[Dict[str, Union[str, int]]]:
         """
         Esta função serve para obter os dados do usuário, 
         os quais incluirão informações gerais URL do perfil, número de 
@@ -63,7 +63,7 @@ class User:
             print(f"Ops! Erro ao analisar a resposta JSON: {e}")
             return None
 
-    def get_user_repos(self):
+    def get_user_repos(self) -> Dict[str, str]:
         """
         Esta função serve para coletar o nome dos repositórios
         públicos do usuário, o link do repositório e armazená-los
@@ -113,7 +113,7 @@ class User:
 
                 print(f'As informações foram salvas em "{arquivo_txt}".')
         except Exception as e:
-            print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')    
+            print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')
 
 class TestMethods(unittest.TestCase):
     def test_user_has_minimal_parameters(self):

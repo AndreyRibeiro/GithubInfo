@@ -6,7 +6,7 @@ Este código possui o intuito de coletar informações do usuário, como nome de
 
 1. Clone ou faça um download do repositório.
 2. Faça o download e instale a versão mais recente do Python pelo site https://www.python.org.
-3. Após a instalação, abra um terminal, copie o caminho onde foi clonado a pasta do repositório através do comando cd. Ex.: "cd C:\Users\{usuario}\Documents\Python\Githubuserinfo".
+3. Após a instalação, abra um terminal, copie o caminho onde foi clonado a pasta do repositório através do comando cd. Ex.: "cd C:\Users\ {usuario}\Documents\Python\Githubuserinfo".
 4. Execute o comando pip install requests.
 5. Execute o comando "python desafio.py".
 
