@@ -1,1 +1,6 @@
+Nome: GitHub
+Perfil: https://github.com/github
+Número de repositórios públicos: 476
+Número de seguidores: 29914
+Número de usuários seguidos: 0
 Repositórios:

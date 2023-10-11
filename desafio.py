@@ -11,6 +11,9 @@ class User:
         através da chamada das funções do código. Caso o usuário não seja 
         encontrado no Github, o programa irá parar e retornar o código do erro.
         """
+        if not username:
+            raise ValueError("Nome de usuário não pode ser vazio!")
+        
         self.username = username
         self.base_url = f'https://api.github.com/users/{self.username}'
 
@@ -41,11 +44,6 @@ class User:
             response = requests.get(self.base_url)
             response.raise_for_status()
             user_info = response.json()
-            # name_user = user_info['name']
-            # url_user = user_info['html_url']
-            # repos_user = user_info['public_repos']
-            # followers_user = user_info['followers']
-            # following_user = user_info['following']
 
             return {
                 'Nome': user_info.get('name', ''),
@@ -69,7 +67,6 @@ class User:
         em um dicionário.
         """
         repos_url = f'{self.base_url}/repos'
-        print(repos_url)
         try:
             response = requests.get(repos_url)
             response.raise_for_status()
@@ -189,5 +186,8 @@ if __name__ == "__main__":
     da classe User.
     """
     username = input("Digite o nome do usuário: ")
-    user = User(username)
-    unittest.main()
+    try:
+        user = User(username)
+        unittest.main()
+    except ValueError as e:
+        print(e)
