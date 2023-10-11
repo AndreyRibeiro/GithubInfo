@@ -2,8 +2,6 @@ import unittest
 import requests
 import os
 from typing import Dict, Union, Optional
-import time
-
 
 class User:
     def __init__(self, username: str):
@@ -131,8 +129,7 @@ class TestMethods(unittest.TestCase):
         ]
         for param in parameters:
             self.assertTrue(param in user_data)
-        time.sleep(1)
-            
+                        
     def test_user_has_public_repos(self):
         """
         Este segundo teste serve para checar se o usuário 
@@ -145,8 +142,6 @@ class TestMethods(unittest.TestCase):
         self.assertTrue(bool(user_repos))
         self.assertIsInstance(user_repos, dict)
         self.assertGreater(len(user_repos), 0)
-        time.sleep(1)
-        
 
     def test_save_user_data_in_file(self):
         """
@@ -165,7 +160,6 @@ class TestMethods(unittest.TestCase):
         with open(file_txt, 'r') as file:
             content = file.read()
         self.assertTrue(content)
-        time.sleep(1)
     
     def test_check_user_exists(self):
         """
@@ -183,7 +177,6 @@ class TestMethods(unittest.TestCase):
             user = User(username)
             result = user.check_user_exists()
             self.assertEqual(result, expected_result, f'Erro para usuário: {username}')
-        time.sleep(1)
 
 if __name__ == "__main__":
     """
