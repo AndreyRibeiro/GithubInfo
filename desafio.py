@@ -107,8 +107,8 @@ class User:
 
                 for name, url in repos_user.items():
                     file.write(f'{name}: {url}\n')
-
                 print(f'As informações foram salvas em "{file_txt}".')
+                
         except Exception as e:
             print(f'Ops! Ocorreu um erro ao salvar os dados em arquivo: {e}')
 
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     """
     username = input("Digite o nome do usuário: ")
     try:
-        user = User(username)
+        User(username)
         unittest.main()
     except ValueError as e:
         print(e)
