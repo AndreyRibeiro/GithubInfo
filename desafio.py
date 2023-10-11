@@ -23,6 +23,10 @@ class User:
         self.save_user_data_in_file()
 
     def check_user_exists(self) -> bool:
+        """
+        Aqui é onde é feita a checagem caso o usuário exista
+        na base de dados do Github.
+        """
         try:
             response = requests.get(self.base_url)
             if response.status_code == 404:
