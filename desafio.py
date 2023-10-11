@@ -12,6 +12,7 @@ class User:
         encontrado no Github, o programa irá parar e retornar o código do erro.
         """
         self.username = username
+        self.base_url = f'https://api.github.com/users/{self.username}'
 
         if not self.check_user_exists():
             print(f'O usuário "{self.username}" não foi encontrado no Github!')
@@ -19,9 +20,8 @@ class User:
         self.save_user_data_in_file()
 
     def check_user_exists(self) -> bool:
-        url = f'https://api.github.com/users/{self.username}'
         try:
-            response = requests.get(url)
+            response = requests.get(self.base_url)
             if response.status_code == 404:
                 return False
             response.raise_for_status()
@@ -37,23 +37,22 @@ class User:
         repositórios públicos, número de seguidores e número de pessoas
         que o mesmo segue, realizando as solicitações pela API do Github.
         """
-        url = f'https://api.github.com/users/{self.username}'
         try:
-            response = requests.get(url)
+            response = requests.get(self.base_url)
             response.raise_for_status()
             user_info = response.json()
-            name_user = user_info['name']
-            url_user = user_info['html_url']
-            repos_user = user_info['public_repos']
-            followers_user = user_info['followers']
-            following_user = user_info['following']
+            # name_user = user_info['name']
+            # url_user = user_info['html_url']
+            # repos_user = user_info['public_repos']
+            # followers_user = user_info['followers']
+            # following_user = user_info['following']
 
             return {
-                'Nome': name_user,
-                'Perfil': url_user,
-                'Número de repositórios públicos': repos_user,
-                'Número de seguidores': followers_user,
-                'Número de usuários seguidos': following_user
+                'Nome': user_info.get('name', ''),
+                'Perfil': user_info.get('html_url', ''),
+                'Número de repositórios públicos': user_info.get('public_repos', 0),
+                'Número de seguidores': user_info.get('followers', 0),
+                'Número de usuários seguidos': user_info.get('following', 0)
             }
 
         except requests.exceptions.RequestException as e:
@@ -69,9 +68,10 @@ class User:
         públicos do usuário, o link do repositório e armazená-los
         em um dicionário.
         """
-        url = f'https://api.github.com/users/{self.username}/repos'
+        repos_url = f'{self.base_url}/repos'
+        print(repos_url)
         try:
-            response = requests.get(url)
+            response = requests.get(repos_url)
             response.raise_for_status()
             repos = response.json()
             repos_dict = {}
